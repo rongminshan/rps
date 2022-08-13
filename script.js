@@ -1,53 +1,108 @@
+let choice = document.querySelectorAll(".choice");
+let playerScoreText = document.getElementById("pScoreText");
+let computerScoreText = document.getElementById("cScoreText");
+let msgText = document.getElementById("msg");
+
+choice.forEach(button => {
+    button.addEventListener("click", (e) => {
+        if(checkTrue) {
+           playRound(e.target.id); 
+        } 
+        else {
+            endGame();
+        }
+
+    });
+})
+
+function playRound(choice)
+{
+    let cSelection = getComputerChoice();
+    let pSelection = choice;
+    console.log(pSelection)
+    console.log(cSelection);
+
+    if(cSelection === "rock")
+    {
+        if(pSelection === "rock")
+        {
+            callTie();
+            updateScore()
+        }
+        if(pSelection === "paper")
+        {
+            callWin();
+            updateScore();
+        } 
+        if(pSelection === "scissors")
+        {
+            callLose();
+            updateScore();
+        }
+    } 
+
+    if(cSelection === "paper")
+    {
+        if(pSelection === "paper")
+        {
+            callTie();
+            updateScore();
+        }
+
+        if(pSelection === "rock")
+        {
+            callLose();
+            updateScore();
+        }
+        if(pSelection === "scissors")
+        {
+            callWin();
+            updateScore();
+        }
+    }
+
+    if(cSelection === "scissors")
+    {
+        if(pSelection === "scissors")
+        {
+            callTie();
+            updateScore();
+        }
+
+        if(pSelection === "rock")
+        {
+            callWin();
+            updateScore();
+        }
+        if(pSelection === "paper")
+        {
+            callLose();
+            updateScore();
+        }
+    }
+
+}
+
+function checkTrue() {
+ return true
+}
+
 function getComputerChoice() {
-    let choices = ["rock", "paper", "scissors"];
-    let computerChoice = Math.floor(Math.random() * choices.length);
-    return choices[computerChoice];
-
+    let options = ["rock", "paper", "scissors"];
+    return options[Math.floor(Math.random() * options.length)];
 }
 
-function getPlayerChoice()
+function callTie()
 {
-    let playerChoice = prompt("Please choose either 'rock', 'paper' or 'scissors!").toLowerCase();
-    return playerChoice;
+    msgText.textContent = "No one wins. It's a draw!";
 }
-    
 
-function playRound(playerSelection, computerSelection)
+function callWin()
 {
-    console.log(`player ${playerSelection}`);
-    console.log(`computer ${computerSelection}`);
-
-    if(computerSelection === "rock")
-    {
-        if(playerSelection === "paper") console.log("You Win!");
-        if(playerSelection === "scissors") console.log("You Lose");
-        if(playerSelection === "rock") console.log("No one wins! Tie!");
-
-    } else if (computerSelection === "paper")
-    {
-        if(playerSelection === "scissors") console.log("You Win!");
-        if(playerSelection === "rock") console.log("You Lose");
-        if(playerSelection === "paper") console.log("No one wins! Tie!");
-
-    } else if (computerSelection === "scissors")
-    {
-        if(playerSelection === "rock") console.log("You Win!");
-        if(playerSelection === "paper") console.log("You Lose");
-        if(playerSelection === "scissors") console.log("No one wins! Tie!")
-
-    } else{
-        console.log("no one answered anything")
-    }
+    msgText.textContent = "You Win!";
 }
 
-function game()
+function callLose()
 {
-    for(let i=0; i<5; i++)
-    {
-        let computerChoice = getComputerChoice();
-        let playerChoice = prompt("Please choose either 'rock', 'paper' or 'scissors!").toLowerCase();
-        playRound(playerChoice, computerChoice);        
-    }
+    msgText.textContent = "You Lose!";
 }
-
-game();
