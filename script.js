@@ -1,108 +1,92 @@
-let choice = document.querySelectorAll(".choice");
+let choice = document.querySelectorAll(".button");
 let playerScoreText = document.getElementById("pScoreText");
 let computerScoreText = document.getElementById("cScoreText");
 let msgText = document.getElementById("msg");
 
-choice.forEach(button => {
-    button.addEventListener("click", (e) => {
-        if(checkTrue) {
-           playRound(e.target.id); 
-        } 
-        else {
-            endGame();
-        }
+let playerScore = 0;
+let computerScore = 0;
 
-    });
-})
-
-function playRound(choice)
+function playRound()
 {
-    let cSelection = getComputerChoice();
-    let pSelection = choice;
-    console.log(pSelection)
-    console.log(cSelection);
+    choice.forEach((button) => {
+        button.addEventListener("click", (e) => {
+            let playerSelection = e.target.id;
+            let computerSelection = getComputerSelection();
+            if(playerSelection === "rock")
+            {
+                if(computerSelection === "rock") {
+                    callTie(playerSelection, computerSelection);
+                }
+                if(computerSelection === "paper") {
+                    callLose(playerSelection, computerSelection);
+                }
+                if(computerSelection === "scissors") {
+                    callWin(playerSelection, computerSelection);
+                }
+            }  
 
-    if(cSelection === "rock")
-    {
-        if(pSelection === "rock")
-        {
-            callTie();
-            updateScore()
-        }
-        if(pSelection === "paper")
-        {
-            callWin();
-            updateScore();
-        } 
-        if(pSelection === "scissors")
-        {
-            callLose();
-            updateScore();
-        }
-    } 
+            if(playerSelection === "paper")
+            {
+                if(computerSelection === "paper") {
+                    callTie(playerSelection, computerSelection);
+                }
+                if(computerSelection === "scissors") {
+                    callLose(playerSelection, computerSelection);
+                }
+                if(computerSelection === "rock") {
+                    callWin(playerSelection, computerSelection);
+                }
+            }
 
-    if(cSelection === "paper")
-    {
-        if(pSelection === "paper")
-        {
-            callTie();
-            updateScore();
-        }
-
-        if(pSelection === "rock")
-        {
-            callLose();
-            updateScore();
-        }
-        if(pSelection === "scissors")
-        {
-            callWin();
-            updateScore();
-        }
-    }
-
-    if(cSelection === "scissors")
-    {
-        if(pSelection === "scissors")
-        {
-            callTie();
-            updateScore();
-        }
-
-        if(pSelection === "rock")
-        {
-            callWin();
-            updateScore();
-        }
-        if(pSelection === "paper")
-        {
-            callLose();
-            updateScore();
-        }
-    }
-
+            if(playerSelection === "scissors")
+            {
+                if(computerSelection === "scissors") {
+                    callTie(playerSelection, computerSelection);
+                }
+                if(computerSelection === "rock") {
+                    callLose(playerSelection, computerSelection);
+                }
+                if(computerSelection === "paper") {
+                    callWin(playerSelection, computerSelection);
+                }
+            }
+        })
+    })
 }
 
-function checkTrue() {
- return true
-}
-
-function getComputerChoice() {
+function getComputerSelection()
+{
     let options = ["rock", "paper", "scissors"];
     return options[Math.floor(Math.random() * options.length)];
 }
 
-function callTie()
+function callTie(playerSelection, computerSelection)
 {
-    msgText.textContent = "No one wins. It's a draw!";
+    msgText.textContent = `It's a tie! Player chose ${playerSelection} and computer chose ${computerSelection}`;
+    computerScoreText.textContent = computerScore;
+    playerScoreText.textContent = playerScore
 }
 
-function callWin()
+function callLose(playerSelection, computerSelection)
 {
-    msgText.textContent = "You Win!";
+    msgText.textContent = `It's a lose! Player chose ${playerSelection} and computer chose ${computerSelection}`;
+    computerScore += 1;
+    computerScoreText.textContent = computerScore;
+    playerScoreText.textContent = playerScore;
 }
 
-function callLose()
+function callWin(playerSelection, computerSelection)
 {
-    msgText.textContent = "You Lose!";
+    msgText.textContent = `It's a win! Player chose ${playerSelection} and computer chose ${computerSelection}`;
+    playerScore += 1;
+    computerScoreText.textContent = computerScore;
+    playerScoreText.textContent = playerScore;
 }
+
+function endGame()  
+{
+    choice.forEach(el => {
+        el.disabled = true;
+    })
+}
+playRound();
