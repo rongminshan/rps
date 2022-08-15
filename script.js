@@ -77,7 +77,7 @@ function callTie(playerSelection, computerSelection)
 
 function callLose(playerSelection, computerSelection)
 {
-    msgText.textContent = `It's a lose! Player chose ${playerSelection} and computer chose ${computerSelection}`;
+    msgText.textContent = `You lost! Player chose ${playerSelection} and computer chose ${computerSelection}`;
     computerScore += 1;
     computerScoreText.textContent = computerScore;
     playerScoreText.textContent = playerScore;
@@ -85,7 +85,7 @@ function callLose(playerSelection, computerSelection)
 
 function callWin(playerSelection, computerSelection)
 {
-    msgText.textContent = `It's a win! Player chose ${playerSelection} and computer chose ${computerSelection}`;
+    msgText.textContent = `You win! Player chose ${playerSelection} and computer chose ${computerSelection}`;
     playerScore += 1;
     computerScoreText.textContent = computerScore;
     playerScoreText.textContent = playerScore;
